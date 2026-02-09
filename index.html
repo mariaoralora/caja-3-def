@@ -139,6 +139,27 @@
       color: #2c3e50;
       user-select: none;
     }
+    .cursos-container {
+      display: flex;
+      gap: 1.5rem;
+      max-width: 680px;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .curso-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+      min-width: 200px;
+    }
+    .curso-column label {
+      margin-bottom: 0.4rem;
+    }
+    .curso-column select {
+      max-width: 100%;
+    }
     .total {
       font-weight: 700;
       font-size: 1.5rem;
@@ -198,6 +219,13 @@
       input[type="text"] {
         max-width: 100%;
       }
+      .cursos-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .curso-column {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
@@ -206,32 +234,67 @@
   <label for="nombreEstudiante">Nombre del estudiante:</label>
   <input type="text" id="nombreEstudiante" placeholder="Nombre del estudiante" />
 
-  <label for="cursoEstudiante">Curso:</label>
-  <select id="cursoEstudiante" aria-label="Curso del estudiante">
-    <option value="">Selecciona curso</option>
-    <optgroup label="Nivel Inicial">
-      <option value="Prekinder">Prekinder</option>
-      <option value="Kinder / K-4">Kinder / K-4</option>
-      <option value="Pre-Primario / K-5">Pre-Primario / K-5</option>
-    </optgroup>
-    <optgroup label="Primaria">
-      <option value="1ero de primaria / 1st grade">1ero de primaria / 1st grade</option>
-      <option value="2do de primaria / 2nd grade">2do de primaria / 2nd grade</option>
-      <option value="3ro de primaria / 3rd grade">3ro de primaria / 3rd grade</option>
-      <option value="4to de primaria / 4th grade">4to de primaria / 4th grade</option>
-      <option value="5to de primaria / 5th grade">5to de primaria / 5th grade</option>
-      <option value="6to de primaria / 6th grade">6to de primaria / 6th grade</option>
-    </optgroup>
-    <optgroup label="Secundaria">
-      <option value="1ero de secundaria / 7th grade">1ero de secundaria / 7th grade</option>
-      <option value="2do de secundaria / 8th grade">2do de secundaria / 8th grade</option>
-      <option value="3ro de secundaria / 9th grade">3ro de secundaria / 9th grade</option>
-      <option value="4to de secundaria / 10th grade">4to de secundaria / 10th grade</option>
-      <option value="5to de secundaria / 11th grade">5to de secundaria / 11th grade</option>
-      <option value="6to de secundaria / 12th grade">6to de secundaria / 12th grade</option>
-      <option value="Profesor(a)">Profesor(a)</option>
-    </optgroup>
-  </select>
+  <div class="cursos-container">
+    <div class="curso-column">
+      <label for="cursoEspanol">Curso (Español):</label>
+      <select id="cursoEspanol" aria-label="Curso en español">
+        <option value="">Selecciona</option>
+        <optgroup label="Nivel Inicial">
+          <option value="Prekinder">Prekinder</option>
+          <option value="Kinder">Kinder</option>
+          <option value="Pre-Primario">Pre-Primario</option>
+        </optgroup>
+        <optgroup label="Primaria">
+          <option value="1ero de primaria">1ero de primaria</option>
+          <option value="2do de primaria">2do de primaria</option>
+          <option value="3ro de primaria">3ro de primaria</option>
+          <option value="4to de primaria">4to de primaria</option>
+          <option value="5to de primaria">5to de primaria</option>
+          <option value="6to de primaria">6to de primaria</option>
+        </optgroup>
+        <optgroup label="Secundaria">
+          <option value="1ero de secundaria">1ero de secundaria</option>
+          <option value="2do de secundaria">2do de secundaria</option>
+          <option value="3ro de secundaria">3ro de secundaria</option>
+          <option value="4to de secundaria">4to de secundaria</option>
+          <option value="5to de secundaria">5to de secundaria</option>
+          <option value="6to de secundaria">6to de secundaria</option>
+          <option value="Profesor(a)">Profesor(a)</option>
+        </optgroup>
+      </select>
+    </div>
+    
+    <div class="curso-column">
+      <label for="cursoIngles">Curso (English):</label>
+      <select id="cursoIngles" aria-label="Curso en inglés">
+        <option value="">Select</option>
+        <optgroup label="Initial Level">
+          <option value="K-4">K-4</option>
+          <option value="K-5">K-5</option>
+          <option value="Kindergarten">Kindergarten</option>
+        </optgroup>
+        <optgroup label="Elementary">
+          <option value="1st grade">1st grade</option>
+          <option value="2nd grade">2nd grade</option>
+          <option value="3rd grade">3rd grade</option>
+          <option value="4th grade">4th grade</option>
+          <option value="5th grade">5th grade</option>
+          <option value="6th grade">6th grade</option>
+        </optgroup>
+        <optgroup label="Middle School">
+          <option value="7th grade">7th grade</option>
+          <option value="8th grade">8th grade</option>
+          <option value="9th grade">9th grade</option>
+          <option value="10th grade">10th grade</option>
+          <option value="11th grade">11th grade</option>
+          <option value="12th grade">12th grade</option>
+          <option value="Teacher">Teacher</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+
+  <input type="hidden" id="cursoEstudiante" value="" />
 
   <input type="hidden" id="cajaSelect" value="Caja 3" />
 
@@ -255,37 +318,42 @@
 
   <script>
     const productos = [
-      { nombre: "Pizza", precio: 85 },
-      { nombre: "Nachos", precio: 100 },
-      { nombre: "Pastelitos", precio: 50 },
-      { nombre: "Croquetas", precio: 50 },
-      { nombre: "Taqueritos", precio: 40 },
-      { nombre: "Palomitas", precio: 45 },
-      { nombre: "Refresco", precio: 60 },
-      { nombre: "Jugo", precio: 45 },
-      { nombre: "Algodón", precio: 45 },
-      { nombre: "Donas", precio: 60 },
+      { nombre: "Pizza", precio: 75 },
+      { nombre: "Hot Dog", precio: 100 },
+      { nombre: "Pastelitos", precio: 40 },
+      { nombre: "Croquetas", precio: 40 },
+      { nombre: "Taqueritos", precio: 30 },
+      { nombre: "Palomitas", precio: 35 },
+      { nombre: "Refresco", precio: 50 },
+      { nombre: "Jugo", precio: 35 },
+      { nombre: "Algodón", precio: 35 },
+      { nombre: "Donas", precio: 50 },
       { nombre: "Galleta glaseada", precio: 100 },
+      { nombre: "Alfajor", precio: 50 },
+      { nombre: "Cake Pop", precio: 60 },
       { nombre: "Lengüita", precio: 25 },
       { nombre: "Chocolate", precio: 20 },
-      { nombre: "Gomitas", precio: 15 },
-      { nombre: "Bolón", precio: 10 },
-      { nombre: "Ice pops", precio: 35 },
-      { nombre: "Húndelo en el mar", precio: 100 },
-      { nombre: "Encuentra el tesoro", precio: 35 },
-      { nombre: "Juego de memoria", precio: 25 },
-      { nombre: "Carrera de botes", precio: 30 },
-      { nombre: "Vete de Pesca", precio: 25 },
+      { nombre: "Candy Bar pequeño", precio: 75 },
+      { nombre: "Candy Bar Mediano", precio: 100 },
+      { nombre: "Candy Bar Grande", precio: 120 },
+      { nombre: "Frío Frío", precio: 80 },
+      { nombre: "Penalties", precio: 35 },
+      { nombre: "Make your Bracelet", precio: 50 },
+      { nombre: "Ring Toss", precio: 25 },
       { nombre: "Just dance", precio: 30 },
+      { nombre: "Shake your Body", precio: 10 },
       { nombre: "Decora tu slime", precio: 125 },
-      { nombre: "Tiro al pulpo", precio: 25 },
+      { nombre: "Ponle el beso al Sapo", precio: 25 },
       { nombre: "Pinta carita", precio: 30 },
       { nombre: "Inflables", precio: 50 },
       { nombre: "Videojuegos", precio: 35 },
       { nombre: "Simulador", precio: 60 },
       { nombre: "Realidad virtual", precio: 100 },
-      { nombre: "Polaroid", precio: 100 },
+      { nombre: "Photobooth", precio: 100 },
       { nombre: "Foto digital", precio: 60 },
+      { nombre: "Serenata", precio: 40 },
+      { nombre: "Rosa", precio: 80 },
+      { nombre: "Carta", precio: 50 },
       { nombre: "VIP", precio: 100 },
       { nombre: "Entrada", precio: 25 }
     ];
@@ -430,12 +498,23 @@
 
     function guardarCompra() {
       const nombre = document.getElementById('nombreEstudiante').value.trim();
-      const curso = document.getElementById('cursoEstudiante').value.trim();
+      const cursoEspanol = document.getElementById('cursoEspanol').value.trim();
+      const cursoIngles = document.getElementById('cursoIngles').value.trim();
       const caja = document.getElementById('cajaSelect').value;
 
-      if (!nombre || !curso) {
-        alert('Por favor, ingresa el nombre del estudiante y el curso.');
+      if (!nombre || (!cursoEspanol && !cursoIngles)) {
+        alert('Por favor, ingresa el nombre del estudiante y selecciona al menos un curso.');
         return;
+      }
+
+      // Combinar los cursos seleccionados
+      let cursoFinal = '';
+      if (cursoEspanol && cursoIngles) {
+        cursoFinal = `${cursoEspanol} / ${cursoIngles}`;
+      } else if (cursoEspanol) {
+        cursoFinal = cursoEspanol;
+      } else {
+        cursoFinal = cursoIngles;
       }
 
       const ahora = new Date();
@@ -468,7 +547,7 @@
         return;
       }
 
-      let resumenTexto = `📅 Fecha y hora: ${fechaHora}\n👤 Estudiante: ${nombre}\n📚 Curso: ${curso}\n💰 Caja: ${caja}\n\n🛒 Productos:\n`;
+      let resumenTexto = `📅 Fecha y hora: ${fechaHora}\n👤 Estudiante: ${nombre}\n📚 Curso: ${cursoFinal}\n💰 Caja: ${caja}\n\n🛒 Productos:\n`;
       let total = 0;
       itemsComprados.forEach(({ cantidad, producto }) => {
         resumenTexto += `- ${producto.nombre} x ${cantidad} = RD$${cantidad * producto.precio}\n`;
@@ -480,7 +559,7 @@
 
       const registro = {
         nombre,
-        curso,
+        curso: cursoFinal,
         items: itemsComprados,
         total,
         caja,
@@ -497,7 +576,8 @@
       renderProductos();
       actualizarTotal();
       document.getElementById('nombreEstudiante').value = '';
-      document.getElementById('cursoEstudiante').value = '';
+      document.getElementById('cursoEspanol').value = '';
+      document.getElementById('cursoIngles').value = '';
     }
 
     function actualizarHistorial() {
