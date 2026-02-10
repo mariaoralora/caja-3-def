@@ -318,44 +318,44 @@
 
   <script>
     const productos = [
-      { nombre: "Pizza", precio: 75 },
-      { nombre: "Hot Dog", precio: 100 },
-      { nombre: "Pastelitos", precio: 40 },
-      { nombre: "Croquetas", precio: 40 },
-      { nombre: "Taqueritos", precio: 30 },
-      { nombre: "Palomitas", precio: 35 },
-      { nombre: "Refresco", precio: 50 },
-      { nombre: "Jugo", precio: 35 },
-      { nombre: "Algodón", precio: 35 },
-      { nombre: "Donas", precio: 50 },
-      { nombre: "Galleta glaseada", precio: 100 },
-      { nombre: "Alfajor", precio: 50 },
-      { nombre: "Cake Pop", precio: 60 },
-      { nombre: "Lengüita", precio: 25 },
-      { nombre: "Chocolate", precio: 20 },
-      { nombre: "Candy Bar pequeño", precio: 75 },
-      { nombre: "Candy Bar Mediano", precio: 100 },
-      { nombre: "Candy Bar Grande", precio: 120 },
-      { nombre: "Frío Frío", precio: 80 },
-      { nombre: "Penalties", precio: 35 },
-      { nombre: "Make your Bracelet", precio: 50 },
-      { nombre: "Ring Toss", precio: 25 },
-      { nombre: "Just dance", precio: 30 },
-      { nombre: "Shake your Body", precio: 10 },
-      { nombre: "Decora tu slime", precio: 125 },
-      { nombre: "Ponle el beso al Sapo", precio: 25 },
-      { nombre: "Pinta carita", precio: 30 },
-      { nombre: "Inflables", precio: 50 },
-      { nombre: "Videojuegos", precio: 35 },
-      { nombre: "Simulador", precio: 60 },
-      { nombre: "Realidad virtual", precio: 100 },
-      { nombre: "Photobooth", precio: 100 },
-      { nombre: "Foto digital", precio: 60 },
-      { nombre: "Serenata", precio: 40 },
-      { nombre: "Rosa", precio: 80 },
-      { nombre: "Carta", precio: 50 },
-      { nombre: "VIP", precio: 100 },
-      { nombre: "Entrada", precio: 25 }
+      { nombre: "Pizza", precio: 75, tipo: "comida" },
+      { nombre: "Hot Dog", precio: 100, tipo: "comida" },
+      { nombre: "Pastelitos", precio: 40, tipo: "comida" },
+      { nombre: "Croquetas", precio: 40, tipo: "comida" },
+      { nombre: "Taqueritos", precio: 30, tipo: "comida" },
+      { nombre: "Palomitas", precio: 35, tipo: "comida" },
+      { nombre: "Refresco", precio: 50, tipo: "comida" },
+      { nombre: "Jugo", precio: 35, tipo: "comida" },
+      { nombre: "Algodón", precio: 35, tipo: "comida" },
+      { nombre: "Donas", precio: 50, tipo: "comida" },
+      { nombre: "Galleta glaseada", precio: 100, tipo: "comida" },
+      { nombre: "Alfajor", precio: 50, tipo: "comida" },
+      { nombre: "Cake Pop", precio: 60, tipo: "comida" },
+      { nombre: "Lengüita", precio: 25, tipo: "comida" },
+      { nombre: "Chocolate", precio: 20, tipo: "comida" },
+      { nombre: "Candy Bar pequeño", precio: 75, tipo: "comida" },
+      { nombre: "Candy Bar Mediano", precio: 100, tipo: "comida" },
+      { nombre: "Candy Bar Grande", precio: 120, tipo: "comida" },
+      { nombre: "Frío Frío", precio: 80, tipo: "comida" },
+      { nombre: "Penalties", precio: 35, tipo: "actividad" },
+      { nombre: "Make your Bracelet", precio: 50, tipo: "actividad" },
+      { nombre: "Ring Toss", precio: 25, tipo: "actividad" },
+      { nombre: "Just dance", precio: 30, tipo: "actividad" },
+      { nombre: "Shake your Body", precio: 10, tipo: "actividad" },
+      { nombre: "Decora tu slime", precio: 125, tipo: "actividad" },
+      { nombre: "Ponle el beso al Sapo", precio: 25, tipo: "actividad" },
+      { nombre: "Pinta carita", precio: 30, tipo: "actividad" },
+      { nombre: "Inflables", precio: 50, tipo: "actividad" },
+      { nombre: "Videojuegos", precio: 35, tipo: "actividad" },
+      { nombre: "Simulador", precio: 60, tipo: "actividad" },
+      { nombre: "Realidad virtual", precio: 100, tipo: "actividad" },
+      { nombre: "Photobooth", precio: 100, tipo: "actividad" },
+      { nombre: "Foto digital", precio: 60, tipo: "actividad" },
+      { nombre: "Serenata", precio: 40, tipo: "actividad" },
+      { nombre: "Rosa", precio: 80, tipo: "actividad" },
+      { nombre: "Carta", precio: 50, tipo: "actividad" },
+      { nombre: "VIP", precio: 100, tipo: "actividad" },
+      { nombre: "Entrada", precio: 25, tipo: "actividad" }
     ];
 
     let compra = [];
@@ -420,15 +420,16 @@
 
     function renderProductos() {
       productosDiv.innerHTML = '';
-      const firstActivityIndex = productos.findIndex(p => p.nombre === 'Húndelo en el mar');
-      const actividadStart = firstActivityIndex >= 0 ? firstActivityIndex : productos.length;
-
-      productosDiv.appendChild(crearSeparador('Comidas'));
+      let ultimoTipo = null;
 
       productos.forEach((prod, idx) => {
-        if (idx === actividadStart) {
-          productosDiv.appendChild(crearSeparador('Actividades'));
+        // Si cambia el tipo, agregar separador
+        if (prod.tipo !== ultimoTipo) {
+          ultimoTipo = prod.tipo;
+          const titulo = prod.tipo === 'comida' ? 'Comidas' : 'Actividades';
+          productosDiv.appendChild(crearSeparador(titulo));
         }
+
         const prodHTML = crearProductoHTML(prod, idx);
         productosDiv.appendChild(prodHTML);
       });
@@ -597,7 +598,7 @@
     }
 
     function enviarRegistroAGoogleSheet(registro) {
-      const url = 'https://script.google.com/macros/s/AKfycbxEnqkkw6XeomP82jaGvQih-6Z7C1sJIoEL42R7uo4mP0eLARWZOb44rB2pooudu_Vv/exec';
+      const url = 'https://script.google.com/macros/s/AKfycbwsa1qR4mKAFaF1ruFKCoI7SELFoDiyXgbbyt0jXnRWKDAAoLkk8ZcsubqsRtLMsVgG/exec';
       
       const confirmarBtn = document.querySelector('.confirmar');
       const originalText = confirmarBtn.textContent;
